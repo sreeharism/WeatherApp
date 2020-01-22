@@ -1,6 +1,8 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const geoCode = require('./utils/geoCode')
+const weatherData = require('./utils/weatherModule')
 
 const app = express()
 
@@ -47,12 +49,24 @@ app.get('/weather', (req, res) => {
         })
         
     }
-    res.send({
-        location: 'Pattambi',
-        temperature: '26 degress',
-        precepProbability: 'zero chance of rain',
-        address: req.query.address
-    })
+    geoCode.geoCode(req.query.address, (error, { lattitude, longittude, location }) => {
+        if (error) {
+            return res.send({ error })   
+        }
+    
+        weatherData( {lattitude, longittude}, (error, {currentTemp, currentPrecipProbability, currentSummary}) => {     
+           if (error) {
+            return res.send({ error }) 
+           }
+           res.send({
+            location,
+            temperature: currentTemp,
+            precepProbability: currentPrecipProbability,
+            weatherSummary: currentSummary,
+            address: req.query.address
+        })
+        })
+     })
 })
 
 app.get("/help/*", (req, res) => {
