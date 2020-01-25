@@ -4,13 +4,20 @@
     <title>Weather</title>
     <link rel="icon" href="img/cloud.png">
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/app.js"></script>
   </head>
   <body>
     <div class="main-content">
     {{>header}}
-    <p>Use this site to see weather</p>
+    <p>Search with the address here for seeing the weather information</p>
+    <form>
+      <input placeholder="location">
+      <button>Search</button>
+    </form>
+    <p id="message-1"></p>
+    <p id="message-2"></p>
     </div>
     {{>footer}}
+    {{!-- place script bottom inorder to load all elelement before script running --}}
+    <script src="/js/app.js"></script>
   </body>
 </html>

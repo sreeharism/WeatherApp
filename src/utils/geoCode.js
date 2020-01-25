@@ -4,7 +4,6 @@ const request = require('request')
 const geoCode = (address,callback) => {
    const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURIComponent(address) + '.json?access_token=pk.eyJ1Ijoic3JlZWhhcmlzbSIsImEiOiJjazVlYTEwNzgxejhkM2RtdThlZDg4cGJsIn0.-zPBb-3Ta_b7P49mT2U73A&limit=1'
    request({ url, json: true}, (error, {body}) => {
-      console.log(body.features)
       if (error) {
          const error = 'Unable to connect to geoCode Service'
          const data = undefined

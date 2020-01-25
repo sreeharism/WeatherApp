@@ -21,8 +21,8 @@ app.use(express.static(publicDirectorytPath))
 
 app.get('', (req, res) => {
     res.render('index', {
-        title: 'Sreeharis Weather App',
-        footerText: 'Sreehari Mullapulli'
+        title: 'Weather App',
+        footerText: 'Created by Sreehari Mullapulli'
     })
 })
 
@@ -45,24 +45,26 @@ app.get('/help', (req, res) => {
 app.get('/weather', (req, res) => {
     if ( !req.query.address ) {
         return res.send({
-            error: 'Yous should provide a address'
+            error: 'You should provide a address'
         })
         
     }
-    geoCode.geoCode(req.query.address, (error, { lattitude, longittude, location }) => {
+    geoCode.geoCode(req.query.address, (error, { lattitude, longittude, location } = {}) => {
         if (error) {
             return res.send({ error })   
         }
     
-        weatherData( {lattitude, longittude}, (error, {currentTemp, currentPrecipProbability, currentSummary}) => {     
+        weatherData( {lattitude, longittude}, (error, {currentTemp, currentPrecipProbability, currentSummary} = {}) => {     
            if (error) {
             return res.send({ error }) 
            }
+           const weatherSummary = 'In ' + location + ' , the current temperture is ' + currentTemp + ' degree celcius' + ' and it is '
+           + currentSummary + '. The chance of rain is ' + currentPrecipProbability + ' Percentage.'
            res.send({
             location,
             temperature: currentTemp,
             precepProbability: currentPrecipProbability,
-            weatherSummary: currentSummary,
+            weatherSummary: weatherSummary,
             address: req.query.address
         })
         })
