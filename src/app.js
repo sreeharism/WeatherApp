@@ -10,6 +10,7 @@ const app = express()
 const publicDirectorytPath = path.join(__dirname, '../public')
 const viewsDirectoryPath = path.join(__dirname, '../templates/views')
 const partialsDirectoryPath = path.join(__dirname, '../templates/partials')
+const port = process.env.PORT || 3000
 
 // Setup Hnadle bar engine end views location
 app.set('view engine', 'hbs')
@@ -28,7 +29,7 @@ app.get('', (req, res) => {
 
 app.get('/about', (req, res) => {
     res.render('about', {
-        title: 'Weather App about page',
+        title: 'About Page',
         footerText: 'Sreehari Mullapulli'
     })
 })
@@ -83,7 +84,7 @@ app.get('*', (req, res) => {
         footerText: 'Please use proper url'
     })
 })  
-app.listen(3000, () => {
-    console.log('the server is up')
+app.listen(port, () => {
+    console.log('the server is up on port ' + port)
 })
  
